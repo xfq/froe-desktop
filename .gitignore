@@ -1,0 +1,13 @@
+node_modules/
+out/
+release/
+.DS_Store
+*.log
+
+# These project documents must override matching user-level ignore rules.
+!AGENTS.md
+!CONTEXT.md
+!PRODUCT.md
+!.impeccable/
+!.impeccable/design.json
+.impeccable/review/

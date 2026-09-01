@@ -1,0 +1,7 @@
+allowBuilds:
+  electron: true
+  electron-winstaller: false
+  esbuild: true
+confirmModulesPurge: false
+minimumReleaseAgeExclude:
+  - '@xfq/froe@0.2.1'

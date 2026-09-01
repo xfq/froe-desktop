@@ -1,0 +1,14 @@
+appId: com.xfq.froe.desktop
+productName: Froe
+directories:
+  output: release
+files:
+  - out/**
+  - package.json
+  - resources/licenses/**
+asar: true
+mac:
+  category: public.app-category.developer-tools
+  target:
+    - dir
+  artifactName: froe-desktop-${version}-${arch}.${ext}

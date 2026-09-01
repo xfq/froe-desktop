@@ -1,0 +1,366 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-01T05:44:02Z",
+  "title": "Design System: Froe",
+  "extensions": {
+    "colorMeta": {
+      "brass": {
+        "role": "primary",
+        "displayName": "Proof Brass",
+        "tonalRamp": [
+          "oklch(15% 0.145 86.4)",
+          "oklch(26% 0.145 86.4)",
+          "oklch(37% 0.145 86.4)",
+          "oklch(49% 0.145 86.4)",
+          "oklch(61% 0.145 86.4)",
+          "oklch(73% 0.145 86.4)",
+          "oklch(84% 0.145 86.4)",
+          "oklch(95% 0.145 86.4)"
+        ]
+      },
+      "brass-pale": {
+        "role": "primary",
+        "displayName": "Pale Brass",
+        "tonalRamp": [
+          "oklch(15% 0.130 89.4)",
+          "oklch(26% 0.130 89.4)",
+          "oklch(37% 0.130 89.4)",
+          "oklch(49% 0.130 89.4)",
+          "oklch(61% 0.130 89.4)",
+          "oklch(73% 0.130 89.4)",
+          "oklch(84% 0.130 89.4)",
+          "oklch(95% 0.130 89.4)"
+        ]
+      },
+      "danger": {
+        "role": "secondary",
+        "displayName": "Danger Coral",
+        "tonalRamp": [
+          "oklch(15% 0.146 32.8)",
+          "oklch(26% 0.146 32.8)",
+          "oklch(37% 0.146 32.8)",
+          "oklch(49% 0.146 32.8)",
+          "oklch(61% 0.146 32.8)",
+          "oklch(73% 0.146 32.8)",
+          "oklch(84% 0.146 32.8)",
+          "oklch(95% 0.146 32.8)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Bench Ink",
+        "tonalRamp": [
+          "oklch(15% 0.006 91.7)",
+          "oklch(26% 0.006 91.7)",
+          "oklch(37% 0.006 91.7)",
+          "oklch(49% 0.006 91.7)",
+          "oklch(61% 0.006 91.7)",
+          "oklch(73% 0.006 91.7)",
+          "oklch(84% 0.006 91.7)",
+          "oklch(95% 0.006 91.7)"
+        ]
+      },
+      "deep-ink": {
+        "role": "neutral",
+        "displayName": "Deep Bench Ink",
+        "tonalRamp": [
+          "oklch(15% 0.004 106.9)",
+          "oklch(26% 0.004 106.9)",
+          "oklch(37% 0.004 106.9)",
+          "oklch(49% 0.004 106.9)",
+          "oklch(61% 0.004 106.9)",
+          "oklch(73% 0.004 106.9)",
+          "oklch(84% 0.004 106.9)",
+          "oklch(95% 0.004 106.9)"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "Raised Charcoal",
+        "tonalRamp": [
+          "oklch(15% 0.014 87.6)",
+          "oklch(26% 0.014 87.6)",
+          "oklch(37% 0.014 87.6)",
+          "oklch(49% 0.014 87.6)",
+          "oklch(61% 0.014 87.6)",
+          "oklch(73% 0.014 87.6)",
+          "oklch(84% 0.014 87.6)",
+          "oklch(95% 0.014 87.6)"
+        ]
+      },
+      "chalk": {
+        "role": "neutral",
+        "displayName": "Chalk White",
+        "tonalRamp": [
+          "oklch(15% 0.020 87.5)",
+          "oklch(26% 0.020 87.5)",
+          "oklch(37% 0.020 87.5)",
+          "oklch(49% 0.020 87.5)",
+          "oklch(61% 0.020 87.5)",
+          "oklch(73% 0.020 87.5)",
+          "oklch(84% 0.020 87.5)",
+          "oklch(95% 0.020 87.5)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Ledger Paper",
+        "tonalRamp": [
+          "oklch(15% 0.026 84.6)",
+          "oklch(26% 0.026 84.6)",
+          "oklch(37% 0.026 84.6)",
+          "oklch(49% 0.026 84.6)",
+          "oklch(61% 0.026 84.6)",
+          "oklch(73% 0.026 84.6)",
+          "oklch(84% 0.026 84.6)",
+          "oklch(95% 0.026 84.6)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Dusty Annotation",
+        "tonalRamp": [
+          "oklch(15% 0.029 83.5)",
+          "oklch(26% 0.029 83.5)",
+          "oklch(37% 0.029 83.5)",
+          "oklch(49% 0.029 83.5)",
+          "oklch(61% 0.029 83.5)",
+          "oklch(73% 0.029 83.5)",
+          "oklch(84% 0.029 83.5)",
+          "oklch(95% 0.029 83.5)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Scored Rule",
+        "tonalRamp": [
+          "oklch(15% 0.026 80.5)",
+          "oklch(26% 0.026 80.5)",
+          "oklch(37% 0.026 80.5)",
+          "oklch(49% 0.026 80.5)",
+          "oklch(61% 0.026 80.5)",
+          "oklch(73% 0.026 80.5)",
+          "oklch(84% 0.026 80.5)",
+          "oklch(95% 0.026 80.5)"
+        ]
+      },
+      "line-soft": {
+        "role": "neutral",
+        "displayName": "Soft Score",
+        "tonalRamp": [
+          "oklch(15% 0.019 80.5)",
+          "oklch(26% 0.019 80.5)",
+          "oklch(37% 0.019 80.5)",
+          "oklch(49% 0.019 80.5)",
+          "oklch(61% 0.019 80.5)",
+          "oklch(73% 0.019 80.5)",
+          "oklch(84% 0.019 80.5)",
+          "oklch(95% 0.019 80.5)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Brief onboarding and Workspace-choice statements."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Empty-ledger prompts and major contextual calls to action."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Evidence Ledger and Settings headers."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Tasks, model narration, and explanatory text."
+      },
+      "label": {
+        "displayName": "Index Label",
+        "purpose": "Sequence gutters, rail headings, status metadata, and compact evidence labels."
+      },
+      "mono-detail": {
+        "displayName": "Mono Detail",
+        "purpose": "Commands, paths, structured results, and Action parameters."
+      }
+    },
+    "shadows": [
+      {
+        "name": "approval-focus-stack",
+        "value": "0 0 0 2px var(--brass), 0 0 0 5px var(--ink)",
+        "purpose": "Crisp keyboard focus boundary for controls on the brass approval gate."
+      }
+    ],
+    "motion": [
+      {
+        "name": "status-pulse",
+        "value": "1.4s ease-in-out infinite",
+        "purpose": "Pulses the active status diamond by lowering opacity at the midpoint."
+      },
+      {
+        "name": "loading-line",
+        "value": "1.2s ease-in-out infinite",
+        "purpose": "Advances the three loading rules with 0.12-second staggered delays."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-width",
+        "value": "1100px"
+      },
+      {
+        "name": "minimum-width",
+        "value": "920px"
+      },
+      {
+        "name": "compact-height",
+        "value": "720px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The decisive action control for opening a Workspace, saving setup, or starting a Run.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Start Run</button>",
+      "css": ".ds-btn-primary { display: inline-flex; min-height: 2.65rem; align-items: center; justify-content: center; gap: 0.55rem; padding: 0.6rem 0.95rem; border: 1px solid transparent; border-radius: 0; background: var(--brass); color: var(--ink); font-family: \"Atkinson Hyperlegible Next\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; font-weight: 700; cursor: pointer; } .ds-btn-primary:hover:not(:disabled) { background: var(--brass-pale); } .ds-btn-primary:focus-visible { outline: 3px solid var(--brass-pale); outline-offset: 3px; } .ds-btn-primary:disabled { cursor: not-allowed; opacity: 0.55; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A ruled dark control for settings and subordinate operations.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">Replace connection</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; min-height: 2.65rem; align-items: center; justify-content: center; gap: 0.55rem; padding: 0.6rem 0.95rem; border: 1px solid var(--line); border-radius: 0; background: var(--deep-ink); color: var(--paper); font-family: \"Atkinson Hyperlegible Next\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; font-weight: 700; cursor: pointer; } .ds-btn-secondary:hover:not(:disabled) { border-color: var(--brass); color: var(--chalk); } .ds-btn-secondary:focus-visible { outline: 3px solid var(--brass-pale); outline-offset: 3px; } .ds-btn-secondary:disabled { cursor: not-allowed; opacity: 0.55; }"
+    },
+    {
+      "name": "Cancel Run Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "The explicit destructive-edge control shown while a Run is active.",
+      "html": "<button class=\"ds-btn-cancel\" type=\"button\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\"><rect x=\"6\" y=\"6\" width=\"12\" height=\"12\" fill=\"currentColor\" /></svg>Cancel Run</button>",
+      "css": ".ds-btn-cancel { display: inline-flex; min-height: 2.65rem; align-items: center; justify-content: center; gap: 0.55rem; padding: 0.6rem 0.95rem; border: 1px solid var(--danger); border-radius: 0; background: transparent; color: var(--danger); font-family: \"Atkinson Hyperlegible Next\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; font-weight: 700; cursor: pointer; } .ds-btn-cancel svg { width: 1rem; height: 1rem; } .ds-btn-cancel:hover:not(:disabled) { background: var(--deep-ink); } .ds-btn-cancel:focus-visible { outline: 3px solid var(--brass-pale); outline-offset: 3px; } .ds-btn-cancel:disabled { cursor: not-allowed; opacity: 0.55; }"
+    },
+    {
+      "name": "Labeled Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "The standard settings and setup field with compact helper copy.",
+      "html": "<label class=\"ds-field\"><strong>Base URL</strong><span>Use the default for OpenAI, or enter a compatible endpoint.</span><input type=\"url\" value=\"https://api.openai.com/v1\" /></label>",
+      "css": ".ds-field { display: grid; gap: 0.4rem; color: var(--chalk); font-family: \"Atkinson Hyperlegible Next\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; } .ds-field strong { font-size: 0.78rem; font-weight: 700; } .ds-field span { color: var(--muted); font-size: 0.72rem; } .ds-field input { width: 100%; min-height: 2.75rem; padding: 0.6rem 0.7rem; border: 1px solid var(--line); border-radius: 0; background: var(--deep-ink); color: var(--chalk); font: inherit; } .ds-field input:focus-visible { outline: 3px solid var(--brass-pale); outline-offset: 3px; } .ds-field input:invalid:not(:placeholder-shown) { border-color: var(--danger); }"
+    },
+    {
+      "name": "Workspace Picker",
+      "kind": "button",
+      "refersTo": "workspace-picker",
+      "description": "The broad repository selector used before a Session opens.",
+      "html": "<button class=\"ds-workspace-picker\" type=\"button\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M3.5 6.5h6l2 2h9v9h-17v-11Z\" stroke=\"currentColor\" stroke-width=\"1.7\" /></svg><span><strong>Select a Workspace</strong><small>Choose the repository Froe may inspect and change</small></span></button>",
+      "css": ".ds-workspace-picker { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: 1rem; width: 100%; align-items: center; padding: 1.2rem; border: 1px solid var(--line); border-radius: 0; background: var(--raised); color: var(--paper); font-family: \"Atkinson Hyperlegible Next\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; text-align: left; cursor: pointer; } .ds-workspace-picker:hover { border-color: var(--brass); } .ds-workspace-picker:focus-visible { outline: 3px solid var(--brass-pale); outline-offset: 3px; } .ds-workspace-picker svg { width: 2rem; color: var(--brass); } .ds-workspace-picker span { display: grid; min-width: 0; } .ds-workspace-picker strong { color: var(--chalk); font-size: 1rem; } .ds-workspace-picker small { overflow: hidden; color: var(--muted); text-overflow: ellipsis; white-space: nowrap; }"
+    },
+    {
+      "name": "Rail Navigation Button",
+      "kind": "nav",
+      "refersTo": "rail-button",
+      "description": "A full-width ruled action in the persistent Workspace rail.",
+      "html": "<button class=\"ds-rail-button\" type=\"button\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\"><circle cx=\"12\" cy=\"12\" r=\"3\" stroke=\"currentColor\" stroke-width=\"1.7\" /><path d=\"M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1\" stroke=\"currentColor\" stroke-width=\"1.7\" /></svg>Settings</button>",
+      "css": ".ds-rail-button { display: flex; width: 100%; min-height: 2.8rem; align-items: center; gap: 0.65rem; padding: 0.65rem 1.25rem; border: 0; border-bottom: 1px solid var(--line-soft); border-radius: 0; background: transparent; color: var(--paper); font-family: \"Atkinson Hyperlegible Next\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; text-align: left; cursor: pointer; } .ds-rail-button:hover:not(:disabled) { background: var(--raised); color: var(--chalk); } .ds-rail-button:focus-visible { outline: 3px solid var(--brass-pale); outline-offset: -3px; } .ds-rail-button:disabled { cursor: not-allowed; opacity: 0.55; } .ds-rail-button svg { width: 1rem; height: 1rem; }"
+    },
+    {
+      "name": "Approval Gate",
+      "kind": "custom",
+      "refersTo": "approval-gate",
+      "description": "The full-width authority interruption that exposes the reason and permitted choices.",
+      "html": "<section class=\"ds-approval\"><div class=\"ds-approval-copy\"><div class=\"ds-approval-heading\"><span class=\"ds-approval-mark\" aria-hidden=\"true\"></span><div><strong>Approval required</strong><small>run command · narrow sandbox exception</small></div></div><p>macOS blocked a network-outbound operation. Allow a narrow retry?</p><code>command: pnpm test</code></div><div class=\"ds-approval-actions\"><button class=\"ds-approval-deny\" type=\"button\">Deny</button><button class=\"ds-approval-allow\" type=\"button\">Allow once</button></div></section>",
+      "css": ".ds-approval { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem; padding: 1.2rem 1.75rem; border-top: 2px solid var(--ink); border-radius: 0; background: var(--brass); color: var(--ink); font-family: \"Atkinson Hyperlegible Next\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; } .ds-approval-heading { display: flex; align-items: flex-start; gap: 0.75rem; } .ds-approval-heading div { display: grid; } .ds-approval-heading strong { font-size: 1rem; } .ds-approval-heading small { color: #332a16; font-size: 0.78rem; } .ds-approval-mark { position: relative; display: block; width: 1.5rem; height: 1.5rem; flex: none; border: 2px solid var(--ink); } .ds-approval-mark::before { position: absolute; top: 0.24rem; left: 0.61rem; width: 2px; height: 0.58rem; background: var(--ink); content: \"\"; } .ds-approval-mark::after { position: absolute; bottom: 0.2rem; left: 0.56rem; width: 0.12rem; height: 0.12rem; background: var(--ink); content: \"\"; } .ds-approval p { margin: 0.75rem 0; font-size: 0.78rem; } .ds-approval code { display: block; font: 0.75rem/1.55 ui-monospace, \"SFMono-Regular\", Menlo, monospace; } .ds-approval-actions { display: flex; align-items: center; justify-content: flex-end; gap: 0.6rem; } .ds-approval button { min-height: 2.65rem; padding: 0.6rem 0.95rem; border: 1px solid var(--ink); border-radius: 0; color: var(--ink); font: 700 1rem \"Atkinson Hyperlegible Next\", sans-serif; cursor: pointer; } .ds-approval-deny { background: var(--ink); color: var(--chalk) !important; } .ds-approval-allow { background: transparent; } .ds-approval-allow:hover { background: var(--ink); color: var(--chalk); } .ds-approval button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; box-shadow: 0 0 0 2px var(--brass), 0 0 0 5px var(--ink); }"
+    },
+    {
+      "name": "Evidence Ledger Action Row",
+      "kind": "custom",
+      "description": "The canonical ordered row for an Action and its machine-shaped parameters.",
+      "html": "<div class=\"ds-ledger-row\"><div class=\"ds-ledger-meta\"><span>006</span><strong>ACTION</strong></div><div class=\"ds-ledger-content\"><div class=\"ds-ledger-title\"><span class=\"ds-action-marker\" aria-hidden=\"true\"></span><strong>Run Command</strong></div><ul><li>command: pnpm test</li><li>cwd: .</li><li>timeout: 120s</li></ul></div></div>",
+      "css": ".ds-ledger-row { display: grid; grid-template-columns: 7rem minmax(0, 1fr); border-bottom: 1px solid var(--line-soft); background: #15130f; color: var(--paper); font-family: \"Atkinson Hyperlegible Next\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; } .ds-ledger-meta { display: grid; align-content: start; gap: 0.3rem; padding: 1.15rem 1rem 1.15rem 1.75rem; border-right: 1px solid var(--line-soft); color: var(--muted); font-size: 0.68rem; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 0.08em; } .ds-ledger-meta strong { color: var(--paper); font-size: 0.72rem; } .ds-ledger-content { min-width: 0; padding: 1.1rem 1.75rem; overflow-wrap: anywhere; } .ds-ledger-title { display: flex; align-items: baseline; gap: 0.85rem; } .ds-ledger-title strong { color: var(--chalk); font-size: 0.88rem; } .ds-action-marker { position: relative; display: inline-block; width: 0.9rem; height: 0.9rem; color: var(--brass); } .ds-action-marker::before { position: absolute; top: 0.4rem; left: 0.05rem; width: 0.7rem; height: 2px; background: currentColor; content: \"\"; } .ds-action-marker::after { position: absolute; top: 0.22rem; right: 0.05rem; width: 0.35rem; height: 0.35rem; border-top: 2px solid currentColor; border-right: 2px solid currentColor; content: \"\"; transform: rotate(45deg); } .ds-ledger-content ul { display: grid; gap: 0.3rem; margin: 0.75rem 0 0; padding: 0; list-style: none; color: var(--muted); font: 0.78rem/1.55 ui-monospace, \"SFMono-Regular\", Menlo, monospace; }"
+    },
+    {
+      "name": "Configured State",
+      "kind": "chip",
+      "description": "The compact outlined state used for configured services and active counts.",
+      "html": "<span class=\"ds-configured\">Configured</span>",
+      "css": ".ds-configured { display: inline-flex; padding: 0.3rem 0.45rem; border: 1px solid var(--brass); border-radius: 0; color: var(--brass-pale); font-family: \"Atkinson Hyperlegible Next\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; } .ds-configured:hover { color: var(--chalk); } .ds-configured:focus-visible { outline: 3px solid var(--brass-pale); outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Marking Bench",
+    "overview": "Froe feels like work inspected on a machinist's marking bench: matte charcoal fields hold the work, fine scored rules establish order, chalk-warm text remains legible for long runs, and brass identifies the proof-bearing moments. The interface is dense, explicit, and deliberately unsoftened. Its visual hierarchy comes from sequence, contrast, and ruled structure rather than decorative containers.\n\nThe Evidence Ledger is the world's signature expression. User tasks, model statements, Actions, results, approval boundaries, and outcomes all occupy one ordered record with a fixed sequence gutter. Authority is never hidden behind generic chat chrome: decisions appear as high-contrast interruptions inside the same evidence stream.",
+    "keyCharacteristics": [
+      "Matte charcoal surfaces separated by scored one-pixel rules.",
+      "Square controls and containers with no corner rounding.",
+      "Warm, hyperlegible sans-serif text with monospaced operational detail.",
+      "Brass reserved for proof, primary action, active status, and authority boundaries.",
+      "Dense two-column ledger rows that remain legible at the minimum desktop width."
+    ],
+    "rules": [
+      {
+        "name": "The Brass Proof Rule",
+        "body": "Brass marks authorship, evidence-bearing state, primary action, and explicit authority boundaries; no other brand accent competes with it.",
+        "section": "colors"
+      },
+      {
+        "name": "The Semantic Exception Rule",
+        "body": "Danger Coral is reserved for failure, invalid input, and cancellation. It never decorates neutral or successful states.",
+        "section": "colors"
+      },
+      {
+        "name": "The Contrast Ratchet Rule",
+        "body": "When the operating system requests more contrast, annotation and rule tones become lighter while the palette's roles remain unchanged.",
+        "section": "colors"
+      },
+      {
+        "name": "The Evidence Type Rule",
+        "body": "Natural-language reasoning stays in the hyperlegible sans-serif; executable or machine-shaped evidence switches to monospace.",
+        "section": "typography"
+      },
+      {
+        "name": "The Gutter Label Rule",
+        "body": "Ledger and rail metadata is compact, tracked, and uppercase so it reads as indexing rather than narration.",
+        "section": "typography"
+      },
+      {
+        "name": "The Visible Authority Rule",
+        "body": "Workspace, Session state, model, directory authority, MCP status, and Run record remain in the persistent rail throughout active work.",
+        "section": "layout"
+      },
+      {
+        "name": "The Ordered Stream Rule",
+        "body": "Responsive changes may tighten gutters and padding, but they do not reorder or visually detach evidence from its sequence label.",
+        "section": "layout"
+      },
+      {
+        "name": "The Scored-Not-Floating Rule",
+        "body": "Resting surfaces are separated by tone and rules, never by drop shadows, blur, or glass effects.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Instrument Rule",
+        "body": "Interactive and informational containers stay square; circles and pills are not part of this system's container vocabulary.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do preserve the two-column ledger row with its visible sequence-and-type gutter for every evidence event.",
+      "Do use brass to identify primary action, active status, authored task, outcome, and authority boundary.",
+      "Do keep machine-shaped values in monospace and human explanation in Atkinson Hyperlegible Next.",
+      "Do separate regions with one-pixel scored rules and reserve two-pixel rules for stronger boundaries.",
+      "Do keep Workspace and Session authority visible while a Run is active."
+    ],
+    "donts": [
+      "Don't introduce rounded cards, pill buttons, circular status badges, or softened container corners.",
+      "Don't add floating shadows, gradients, glass blur, or decorative texture to resting surfaces.",
+      "Don't add a second brand accent or use Danger Coral outside failure, invalid-input, and cancellation states.",
+      "Don't turn the Evidence Ledger into chat bubbles or detach Actions, approvals, and verification from their ordered sequence.",
+      "Don't hide disabled authority-changing actions during a Run; show their unavailable state explicitly."
+    ]
+  }
+}
