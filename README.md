@@ -31,10 +31,20 @@ To preview the Evidence Ledger with synthetic local data and no API request:
 FROE_DESKTOP_DEMO=1 pnpm dev
 ```
 
-## Packaging
+## Packaging and Installation
+
+To build the macOS installation packages (DMG installer and ZIP archive in `release/`):
 
 ```sh
 pnpm package:mac
+```
+
+Users can open the generated `.dmg` and drag `Froe.app` to `/Applications`, or extract and launch from the `.zip`.
+
+To build an unpacked app directory without creating disk images or archives:
+
+```sh
+pnpm package:mac:dir
 ```
 
 The initial package is unsigned. Signing, notarization, publishing, and update distribution are intentionally outside this repository's first version.

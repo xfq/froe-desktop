@@ -17,7 +17,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
     "test": "vitest run",
     "build": "pnpm typecheck && electron-vite build",
-    "package:mac": "pnpm build && electron-builder --mac dir"
+    "package:mac": "pnpm build && electron-builder --mac",
+    "package:mac:dir": "pnpm build && electron-builder --mac dir"
   },
   "dependencies": {
     "@xfq/froe": "0.3.0",

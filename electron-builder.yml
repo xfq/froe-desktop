@@ -10,5 +10,8 @@ asar: true
 mac:
   category: public.app-category.developer-tools
   target:
-    - dir
+    - dmg
+    - zip
+  artifactName: froe-desktop-${version}-${arch}.${ext}
+dmg:
   artifactName: froe-desktop-${version}-${arch}.${ext}
