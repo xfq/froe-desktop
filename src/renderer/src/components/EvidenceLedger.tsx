@@ -70,7 +70,7 @@ export function EvidenceLedger({ state, running, verbose, onVerboseChange, onIni
         {state.items.length === 0 ? (
           <div className="ledger-empty">
             <div className="empty-wedge" aria-hidden="true" />
-            <h2>Set the first cut</h2>
+            <h2>New conversation</h2>
             <p>Give Froe one concrete task. The investigation, Actions, approvals, and verification will appear here in sequence.</p>
             <button className="text-action" type="button" onClick={onInitialize}>Initialize this Workspace with /init</button>
           </div>

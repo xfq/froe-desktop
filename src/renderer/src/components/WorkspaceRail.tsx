@@ -1,9 +1,14 @@
 import type { FroeSessionStatus } from "@xfq/froe/core";
+import type { WorkspaceHistorySummary } from "../../../shared/desktop-api";
 import { FolderIcon, SettingsIcon, WedgeMark } from "../icons";
 
 interface WorkspaceRailProps {
   status: FroeSessionStatus;
   phase: "ready" | "running" | "awaiting_approval" | "cancelling";
+  activeConversation: "new" | "history";
+  historySummary?: WorkspaceHistorySummary | undefined;
+  onNewConversation(): void;
+  onResumeHistory(): void;
   onNewWorkspace(): void;
   onOpenSettings(): void;
 }
@@ -15,7 +20,16 @@ const phaseLabels: Record<WorkspaceRailProps["phase"], string> = {
   cancelling: "Cancelling Run",
 };
 
-export function WorkspaceRail({ status, phase, onNewWorkspace, onOpenSettings }: WorkspaceRailProps): React.JSX.Element {
+export function WorkspaceRail({
+  status,
+  phase,
+  activeConversation,
+  historySummary,
+  onNewConversation,
+  onResumeHistory,
+  onNewWorkspace,
+  onOpenSettings,
+}: WorkspaceRailProps): React.JSX.Element {
   const workspaceName = status.workspace.split("/").filter(Boolean).at(-1) ?? status.workspace;
   const busy = phase !== "ready";
   return (
@@ -34,6 +48,38 @@ export function WorkspaceRail({ status, phase, onNewWorkspace, onOpenSettings }:
           <span className="rail-label">Workspace</span>
           <strong title={status.workspace}>{workspaceName}</strong>
           <span className="rail-path" title={status.workspace}>{status.workspace}</span>
+        </div>
+      </div>
+
+      <div className="rail-section rail-section--conversations">
+        <span className="rail-label">Conversations</span>
+        <div className="conversation-list" role="list">
+          <button
+            type="button"
+            className={`conversation-item ${activeConversation === "new" ? "conversation-item--active" : ""}`}
+            onClick={onNewConversation}
+            disabled={busy}
+          >
+            <span className="conversation-marker" aria-hidden="true" />
+            <div className="conversation-details">
+              <strong>New conversation</strong>
+              <small>Fresh context</small>
+            </div>
+          </button>
+          {historySummary?.hasHistory === true && (
+            <button
+              type="button"
+              className={`conversation-item ${activeConversation === "history" ? "conversation-item--active" : ""}`}
+              onClick={onResumeHistory}
+              disabled={busy}
+            >
+              <span className="conversation-marker" aria-hidden="true" />
+              <div className="conversation-details">
+                <strong>Previous conversation</strong>
+                <small title={historySummary.preview}>{historySummary.preview}</small>
+              </div>
+            </button>
+          )}
         </div>
       </div>
 

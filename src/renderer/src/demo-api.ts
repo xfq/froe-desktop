@@ -4,9 +4,12 @@ import type {
   BootstrapState,
   DesktopApi,
   DesktopEvent,
+  LedgerItem,
   OpenSessionRequest,
+  OpenSessionResult,
   PresentedSessionEvent,
   RunRequest,
+  WorkspaceHistorySummary,
 } from "../../shared/desktop-api";
 
 export function createDemoApi(): DesktopApi {
@@ -14,6 +17,11 @@ export function createDemoApi(): DesktopApi {
   let status: FroeSessionStatus | undefined;
   let sequence = 0;
   let timerIds: number[] = [];
+  let historySummary: WorkspaceHistorySummary = {
+    hasHistory: true,
+    preview: "Fix the parser’s empty-input regression and verify the narrowest relevant test suite.",
+    itemCount: 4,
+  };
 
   const emit = (event: DesktopEvent): void => listeners.forEach((listener) => listener(event));
   const emitRun = (event: PresentedSessionEvent["event"]): void => {
@@ -67,7 +75,31 @@ export function createDemoApi(): DesktopApi {
     activeRunId: "demo-run",
   });
 
-  const openSession = async (_request: OpenSessionRequest): Promise<FroeSessionStatus> => {
+  const demoHistoryItems: LedgerItem[] = [
+    {
+      id: "demo-history-0",
+      type: "user",
+      task: "Fix the parser’s empty-input regression and verify the narrowest relevant test suite.",
+      images: [],
+    },
+    {
+      id: "demo-history-1",
+      type: "model",
+      text: "I inspected the parser and confirmed the fix with unit tests.",
+    },
+    {
+      id: "demo-history-2",
+      type: "outcome",
+      outcome: {
+        status: "completed",
+        summary: "Verified the parser regression fix.",
+        verification: [{ description: "pnpm test", result: "passed" }],
+        turns: 2,
+      },
+    },
+  ];
+
+  const openSession = async (_request: OpenSessionRequest): Promise<OpenSessionResult> => {
     status = demoStatus();
     sequence = 0;
     timerIds.forEach(window.clearTimeout);
@@ -91,7 +123,7 @@ export function createDemoApi(): DesktopApi {
       emitRun({ type: "approval_requested", ...prompt, choices: [...prompt.choices] });
       emit({ type: "approval_prompt", prompt: { ...prompt, choices: [...prompt.choices] } });
     });
-    return status;
+    return { status, historySummary, restoredItems: [] };
   };
 
   const finishDemo = (statusValue: RunOutcome["status"], summary: string): RunOutcome => {
@@ -120,6 +152,14 @@ export function createDemoApi(): DesktopApi {
     openSession,
     sessionStatus: async () => status,
     closeSession: async () => { timerIds.forEach(window.clearTimeout); status = undefined; emit({ type: "session_closed" }); },
+    resumeHistory: async () => {
+      status = demoStatus();
+      return { status, historySummary, restoredItems: demoHistoryItems };
+    },
+    newConversation: async () => {
+      status = demoStatus();
+      return { status, historySummary, restoredItems: [] };
+    },
     run: async (_request: RunRequest) => {
       emitRun({ type: "run_started", workspace: status?.workspace ?? "/demo", model: status?.config.model ?? "gpt-5.6-terra" });
       emitRun({ type: "model_text", text: "I’ll inspect the requested scope first." });

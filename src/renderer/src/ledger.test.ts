@@ -36,5 +36,18 @@ describe("ledgerReducer", () => {
     expect(state.inputTokens).toBe(120);
     expect(state.outputTokens).toBe(30);
   });
-});
 
+  test("initializes with restored history items on reset", () => {
+    const state = ledgerReducer(initialLedgerState, {
+      type: "reset",
+      initialItems: [
+        { id: "history:0", type: "user", task: "Previous question", images: [] },
+        { id: "history:1", type: "model", text: "Previous answer" },
+      ],
+    });
+
+    expect(state.items).toHaveLength(2);
+    expect(state.items[0]).toMatchObject({ type: "user", task: "Previous question" });
+    expect(state.items[1]).toMatchObject({ type: "model", text: "Previous answer" });
+  });
+});

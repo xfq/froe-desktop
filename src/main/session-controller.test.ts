@@ -49,6 +49,7 @@ const desktopOpenOptions = {
   additionalDirectories: [],
   noLog: false,
   autoApproveNonDestructive: false,
+  resumeHistory: true,
 };
 
 const approvalPrompt: FroeApprovalPrompt = {
@@ -209,5 +210,56 @@ describe("DesktopSessionController", () => {
     await controller.open({ ...desktopOpenOptions, workspace: "/replacement" });
 
     expect(lifecycle).toEqual(["open:1", "close:first", "open:2"]);
+  });
+
+  test("forwards resumeHistory option to the session factory", async () => {
+    const { factory, options } = capturingFactory(fakeSession());
+    const controller = new DesktopSessionController(() => undefined, factory);
+
+    await controller.open({ ...desktopOpenOptions, resumeHistory: true });
+    expect(options().resumeHistory).toBe(true);
+
+    await controller.open({ ...desktopOpenOptions, resumeHistory: false });
+    expect(options().resumeHistory).toBe(false);
+  });
+
+  test("returns restored ledger items when resumeHistory is true and empty when false", async () => {
+    const { factory } = capturingFactory(fakeSession());
+    const historyLoader = {
+      load: vi.fn(async (_workspace: string) => [
+        { id: "history:0", type: "user" as const, task: "Previous task", images: [] },
+        { id: "history:1", type: "model" as const, text: "Previous answer" },
+      ]),
+    };
+    const controller = new DesktopSessionController(() => undefined, factory, historyLoader);
+
+    const resumed = await controller.open({ ...desktopOpenOptions, resumeHistory: true });
+    expect(resumed.restoredItems).toHaveLength(2);
+    expect(resumed.restoredItems[0]).toMatchObject({ type: "user", task: "Previous task" });
+    expect(historyLoader.load).toHaveBeenCalledWith("/workspace");
+
+    const fresh = await controller.open({ ...desktopOpenOptions, resumeHistory: false });
+    expect(fresh.restoredItems).toEqual([]);
+  });
+
+  test("switches between new conversation and resumed history", async () => {
+    const { factory, options } = capturingFactory(fakeSession());
+    const historyLoader = {
+      load: vi.fn(async (_workspace: string) => [
+        { id: "history:0", type: "user" as const, task: "Historical task", images: [] },
+      ]),
+    };
+    const controller = new DesktopSessionController(() => undefined, factory, historyLoader);
+
+    await controller.open({ ...desktopOpenOptions, resumeHistory: false });
+    expect(options().resumeHistory).toBe(false);
+
+    const resumed = await controller.resumeHistory();
+    expect(resumed.restoredItems).toHaveLength(1);
+    expect(options().resumeHistory).toBe(true);
+
+    const fresh = await controller.newConversation();
+    expect(fresh.restoredItems).toEqual([]);
+    expect(options().resumeHistory).toBe(false);
   });
 });

@@ -80,6 +80,10 @@ export function registerDesktopIpc(getWindow: () => BrowserWindow | undefined): 
       case "cancel_run":
         controller.cancel();
         return undefined;
+      case "resume_history":
+        return controller.resumeHistory();
+      case "new_conversation":
+        return controller.newConversation();
       case "approval_response":
         controller.respondToApproval(request.response.approvalId, request.response.decision);
         return undefined;
@@ -142,6 +146,7 @@ function resolveOpenRequest(request: OpenSessionRequest, grants: PathGrantRegist
     additionalDirectories: grants.resolveDirectories(request.additionalDirectoryGrantIds),
     noLog: request.noLog,
     autoApproveNonDestructive: request.autoApproveNonDestructive,
+    resumeHistory: request.resumeHistory,
     ...(request.model === undefined ? {} : { model: requiredText(request.model, "Model") }),
     ...(request.reasoning === undefined ? {} : { reasoning: reasoningEffort(request.reasoning) }),
     ...(request.maxTurns === undefined ? {} : { maxTurns: positiveInteger(request.maxTurns, "Maximum turns") }),
@@ -202,4 +207,3 @@ function positiveInteger(value: unknown, label: string): number {
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
-

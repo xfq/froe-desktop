@@ -130,6 +130,7 @@ export function WorkspaceSetup({ selectWorkspace, selectAdditionalDirectories, o
         maxTurns,
         noLog,
         autoApproveNonDestructive: autoApprove,
+        resumeHistory: false,
       });
     } catch (caught) {
       setError(errorMessage(caught));

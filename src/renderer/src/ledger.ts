@@ -1,22 +1,6 @@
-import type { ImageGrant, PresentedSessionEvent } from "../../shared/desktop-api";
-import type { JsonValue, RunOutcome } from "@xfq/froe/core";
+import type { ImageGrant, LedgerItem, PresentedSessionEvent } from "../../shared/desktop-api";
 
-interface LedgerBase {
-  id: string;
-  runId?: string;
-  sequence?: number;
-}
-
-export type LedgerItem =
-  | (LedgerBase & { type: "user"; task: string; images: ImageGrant[] })
-  | (LedgerBase & { type: "run_started"; workspace: string; model: string })
-  | (LedgerBase & { type: "model"; text: string })
-  | (LedgerBase & { type: "action"; callId: string; name: string; details: string[] })
-  | (LedgerBase & { type: "result"; callId: string; name: string; ok: boolean; output: JsonValue })
-  | (LedgerBase & { type: "approval"; approvalId: string; actionName: string; reason: string; details: string[]; destructive: boolean })
-  | (LedgerBase & { type: "compaction"; previousItems: number; retainedItems: number })
-  | (LedgerBase & { type: "outcome"; outcome: RunOutcome })
-  | (LedgerBase & { type: "error"; message: string });
+export type { LedgerBase, LedgerItem } from "../../shared/desktop-api";
 
 export interface LedgerState {
   items: LedgerItem[];
@@ -28,7 +12,7 @@ export type LedgerAction =
   | { type: "user_task"; id: string; task: string; images: ImageGrant[] }
   | { type: "session_event"; event: PresentedSessionEvent }
   | { type: "error"; id: string; message: string }
-  | { type: "reset" };
+  | { type: "reset"; initialItems?: LedgerItem[] };
 
 export const initialLedgerState: LedgerState = {
   items: [],
@@ -37,7 +21,12 @@ export const initialLedgerState: LedgerState = {
 };
 
 export function ledgerReducer(state: LedgerState, action: LedgerAction): LedgerState {
-  if (action.type === "reset") return initialLedgerState;
+  if (action.type === "reset") {
+    return {
+      ...initialLedgerState,
+      items: action.initialItems ? [...action.initialItems] : [],
+    };
+  }
   if (action.type === "user_task") {
     return {
       ...state,
@@ -109,4 +98,3 @@ function ledgerItem(envelope: PresentedSessionEvent): LedgerItem | undefined {
       return undefined;
   }
 }
-

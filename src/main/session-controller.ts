@@ -12,7 +12,8 @@ import {
   type ReasoningEffort,
   type RunOutcome,
 } from "@xfq/froe/core";
-import type { DesktopEvent, PresentedRunEvent } from "../shared/desktop-api.js";
+import type { DesktopEvent, LedgerItem, OpenSessionResult, PresentedRunEvent, WorkspaceHistorySummary } from "../shared/desktop-api.js";
+import { loadWorkspaceHistory } from "./session-history.js";
 
 interface OpenDesktopSessionOptions {
   workspace: string;
@@ -22,6 +23,7 @@ interface OpenDesktopSessionOptions {
   maxTurns?: number;
   noLog: boolean;
   autoApproveNonDestructive: boolean;
+  resumeHistory?: boolean;
 }
 
 interface RunDesktopTaskRequest {
@@ -42,32 +44,49 @@ export interface FroeSessionFactory {
   open(options: OpenFroeSessionOptions): Promise<FroeSession>;
 }
 
+export interface SessionHistoryLoader {
+  load(workspace: string): Promise<LedgerItem[]>;
+}
+
 const defaultSessionFactory: FroeSessionFactory = {
   open: openFroeSession,
+};
+
+const defaultHistoryLoader: SessionHistoryLoader = {
+  load: loadWorkspaceHistory,
 };
 
 export class DesktopSessionController {
   readonly #emit: DesktopEventSink;
   readonly #factory: FroeSessionFactory;
+  readonly #historyLoader: SessionHistoryLoader;
   readonly #pendingApprovals = new Map<string, PendingApproval>();
   #session: FroeSession | undefined;
   #runController: AbortController | undefined;
+  #lastOpenOptions: OpenDesktopSessionOptions | undefined;
 
-  constructor(emit: DesktopEventSink, factory: FroeSessionFactory = defaultSessionFactory) {
+  constructor(
+    emit: DesktopEventSink,
+    factory: FroeSessionFactory = defaultSessionFactory,
+    historyLoader: SessionHistoryLoader = defaultHistoryLoader,
+  ) {
     this.#emit = emit;
     this.#factory = factory;
+    this.#historyLoader = historyLoader;
   }
 
   status(): FroeSessionStatus | undefined {
     return this.#session?.status();
   }
 
-  async open(options: OpenDesktopSessionOptions): Promise<FroeSessionStatus> {
+  async open(options: OpenDesktopSessionOptions): Promise<OpenSessionResult> {
     await this.close();
+    this.#lastOpenOptions = options;
     const session = await this.#factory.open({
       workspace: options.workspace,
       additionalDirectories: options.additionalDirectories,
       noLog: options.noLog,
+      ...(options.resumeHistory === undefined ? {} : { resumeHistory: options.resumeHistory }),
       approvalMode: options.autoApproveNonDestructive ? "auto_non_destructive" : "prompt",
       overrides: {
         ...(options.model === undefined ? {} : { model: options.model }),
@@ -80,7 +99,27 @@ export class DesktopSessionController {
       },
     });
     this.#session = session;
-    return session.status();
+    const allItems = await this.#historyLoader.load(options.workspace);
+    const firstUser = allItems.find((item) => item.type === "user") as Extract<LedgerItem, { type: "user" }> | undefined;
+    const historySummary: WorkspaceHistorySummary = allItems.length === 0
+      ? { hasHistory: false, itemCount: 0 }
+      : { hasHistory: true, preview: firstUser?.task ?? "Previous conversation", itemCount: allItems.length };
+    const restoredItems = options.resumeHistory === true ? allItems : [];
+    return {
+      status: session.status(),
+      historySummary,
+      restoredItems,
+    };
+  }
+
+  async resumeHistory(): Promise<OpenSessionResult> {
+    if (this.#lastOpenOptions === undefined) throw new Error("No active Workspace Session.");
+    return this.open({ ...this.#lastOpenOptions, resumeHistory: true });
+  }
+
+  async newConversation(): Promise<OpenSessionResult> {
+    if (this.#lastOpenOptions === undefined) throw new Error("No active Workspace Session.");
+    return this.open({ ...this.#lastOpenOptions, resumeHistory: false });
   }
 
   async run(request: RunDesktopTaskRequest): Promise<RunOutcome> {
@@ -208,4 +247,3 @@ function presentRunEvent(envelope: FroeSessionEvent): PresentedRunEvent {
       return structuredClone(event);
   }
 }
-

@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useReducer, useState } from "react";
 import type { ApprovalDecision, FroeSessionStatus, McpServerConfig } from "@xfq/froe/core";
-import type { BootstrapState, DesktopApi, DesktopEvent, ImageGrant, OpenSessionRequest } from "../../shared/desktop-api";
+import type {
+  BootstrapState,
+  DesktopApi,
+  DesktopEvent,
+  ImageGrant,
+  OpenSessionRequest,
+  WorkspaceHistorySummary,
+} from "../../shared/desktop-api";
 import { ApprovalGate } from "./components/ApprovalGate";
 import { Composer, RunStatusStrip } from "./components/Composer";
 import { EvidenceLedger } from "./components/EvidenceLedger";
@@ -18,6 +25,8 @@ export function App(): React.JSX.Element {
   }, []);
   const [bootstrap, setBootstrap] = useState<BootstrapState>();
   const [session, setSession] = useState<FroeSessionStatus>();
+  const [activeConversation, setActiveConversation] = useState<"new" | "history">("new");
+  const [historySummary, setHistorySummary] = useState<WorkspaceHistorySummary>();
   const [ledger, dispatch] = useReducer(ledgerReducer, initialLedgerState);
   const [runPhase, setRunPhase] = useState<"ready" | "running" | "awaiting_approval" | "cancelling">("ready");
   const [approval, setApproval] = useState<Extract<DesktopEvent, { type: "approval_prompt" }>["prompt"]>();
@@ -66,7 +75,7 @@ export function App(): React.JSX.Element {
         task: "Fix the parser’s empty-input regression and verify the narrowest relevant test suite.",
         images: [],
       });
-      const opened = await api.openSession({
+      const result = await api.openSession({
         workspaceGrantId: workspace.id,
         additionalDirectoryGrantIds: [],
         model: "gpt-5.6-terra",
@@ -74,10 +83,13 @@ export function App(): React.JSX.Element {
         maxTurns: 40,
         noLog: false,
         autoApproveNonDestructive: false,
+        resumeHistory: false,
       });
       if (active) {
-        setSession(opened);
-        setModel(opened.config.model);
+        setSession(result.status);
+        setModel(result.status.config.model);
+        setHistorySummary(result.historySummary);
+        setActiveConversation("new");
       }
     }).catch((error) => active && setCriticalMessage(errorMessage(error)));
     return () => { active = false; };
@@ -85,19 +97,49 @@ export function App(): React.JSX.Element {
 
   const refreshBootstrap = async (): Promise<void> => setBootstrap(await api.bootstrap());
   const openSession = async (request: OpenSessionRequest): Promise<void> => {
-    const status = await api.openSession(request);
-    dispatch({ type: "reset" });
-    setSession(status);
-    setModel(status.config.model);
+    const result = await api.openSession(request);
+    setActiveConversation(request.resumeHistory ? "history" : "new");
+    setHistorySummary(result.historySummary);
+    dispatch({ type: "reset", initialItems: result.restoredItems });
+    setSession(result.status);
+    setModel(result.status.config.model);
     setSettingsOpen(false);
   };
   const closeSession = async (): Promise<void> => {
     await api.closeSession();
     dispatch({ type: "reset" });
     setSession(undefined);
+    setHistorySummary(undefined);
+    setActiveConversation("new");
     setRunPhase("ready");
     setApproval(undefined);
     setSettingsOpen(false);
+  };
+  const startNewConversation = async (): Promise<void> => {
+    if (runPhase !== "ready") return;
+    try {
+      const result = await api.newConversation();
+      setActiveConversation("new");
+      setHistorySummary(result.historySummary);
+      dispatch({ type: "reset", initialItems: [] });
+      setSession(result.status);
+      setModel(result.status.config.model);
+    } catch (error) {
+      setCriticalMessage(errorMessage(error));
+    }
+  };
+  const resumePreviousConversation = async (): Promise<void> => {
+    if (runPhase !== "ready") return;
+    try {
+      const result = await api.resumeHistory();
+      setActiveConversation("history");
+      setHistorySummary(result.historySummary);
+      dispatch({ type: "reset", initialItems: result.restoredItems });
+      setSession(result.status);
+      setModel(result.status.config.model);
+    } catch (error) {
+      setCriticalMessage(errorMessage(error));
+    }
   };
   const run = async (task: string): Promise<void> => {
     const runImages = images;
@@ -181,7 +223,16 @@ export function App(): React.JSX.Element {
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-stage">Skip to Evidence Ledger</a>
-      <WorkspaceRail status={session} phase={runPhase} onNewWorkspace={changeWorkspace} onOpenSettings={() => setSettingsOpen(true)} />
+      <WorkspaceRail
+        status={session}
+        phase={runPhase}
+        activeConversation={activeConversation}
+        historySummary={historySummary}
+        onNewConversation={() => void startNewConversation()}
+        onResumeHistory={() => void resumePreviousConversation()}
+        onNewWorkspace={changeWorkspace}
+        onOpenSettings={() => setSettingsOpen(true)}
+      />
       <main className="main-stage" id="main-stage" tabIndex={-1}>
         {settingsOpen ? (
           <SettingsPanel

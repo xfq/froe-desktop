@@ -20,6 +20,8 @@ const api: DesktopApi = {
   closeSession: () => request({ type: "close_session" }),
   run: (run: RunRequest) => request({ type: "run", request: run }),
   cancelRun: () => request({ type: "cancel_run" }),
+  resumeHistory: () => request({ type: "resume_history" }),
+  newConversation: () => request({ type: "new_conversation" }),
   respondToApproval: (response: ApprovalResponse) => request({ type: "approval_response", response }),
   saveOpenAIConnection: (apiKey, baseURL) => request({
     type: "save_openai_connection",
@@ -36,4 +38,3 @@ const api: DesktopApi = {
 };
 
 contextBridge.exposeInMainWorld("froe", api);
-

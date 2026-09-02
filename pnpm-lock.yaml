@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@xfq/froe':
-        specifier: 0.2.1
-        version: 0.2.1(undici@7.29.0)
+        specifier: 0.3.0
+        version: 0.3.0(undici@7.29.0)
       react:
         specifier: 19.2.8
         version: 19.2.8
@@ -917,8 +917,8 @@ packages:
   '@vitest/utils@4.1.11':
     resolution: {integrity: sha512-zTCVGpyFsGWBhllOyKlTw/vnr6D9qxsfSDyfbyZmTyjHw5N/VuvzHpHoQjm2ZJzn4RJgx5w4r7V0er69CmLgPQ==}
 
-  '@xfq/froe@0.2.1':
-    resolution: {integrity: sha512-n7YaDTamsfDLRRlHVcyWz0YkRxCOleLi5pjMNVYHl2NkMo9Xv7NEsPiihAw7iWRLQ7+3P1yv951sPfE4iPjTZw==}
+  '@xfq/froe@0.3.0':
+    resolution: {integrity: sha512-HNJbkKOj0YIYFffDo++cuBd9zId9VuHTp9+O6HJlReCG5a2jER9rZnVAHpEmbiKIx41/4bCzxSGfO61XYQI0SQ==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -2893,7 +2893,7 @@ snapshots:
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.1
 
-  '@xfq/froe@0.2.1(undici@7.29.0)':
+  '@xfq/froe@0.3.0(undici@7.29.0)':
     dependencies:
       openai: 7.8.0(undici@7.29.0)
     transitivePeerDependencies:
