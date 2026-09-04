@@ -40,7 +40,7 @@ export function createDemoApi(): DesktopApi {
   };
 
   const bootstrap = async (): Promise<BootstrapState> => ({
-    appVersion: "0.1.0",
+    appVersion: "0.1.1",
     coreInterfaceVersion: 1,
     demo: true,
     connection: { openAIConfigured: true, baseURL: "https://api.openai.com/v1", tavilyConfigured: true },
