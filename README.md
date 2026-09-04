@@ -41,6 +41,12 @@ pnpm package:mac
 
 Users can open the generated `.dmg` and drag `Froe.app` to `/Applications`, or extract and launch from the `.zip`.
 
+Froe is not yet signed with an Apple Developer ID. On first launch, macOS may prevent the app from opening. After confirming that the app came from the official Froe release, remove its quarantine attribute and launch it again:
+
+```sh
+xattr -dr com.apple.quarantine /Applications/Froe.app
+```
+
 To build an unpacked app directory without creating disk images or archives:
 
 ```sh
@@ -48,4 +54,3 @@ pnpm package:mac:dir
 ```
 
 The initial package is unsigned. Signing, notarization, publishing, and update distribution are intentionally outside this repository's first version.
-
