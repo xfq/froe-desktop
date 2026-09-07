@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { LedgerItem, LedgerState } from "../ledger";
-import { actionLabel, tokenCount } from "../format";
+import { actionLabel, fileSize, tokenCount } from "../format";
 
 interface EvidenceLedgerProps {
   state: LedgerState;
@@ -116,6 +116,20 @@ function LedgerRow({ item, verbose }: { item: LedgerItem; verbose: boolean }): R
         <li className="ledger-row ledger-row--model">
           <LedgerMeta sequence={sequence} label="Froe" />
           <div className="ledger-content model-text">{item.text}</div>
+        </li>
+      );
+    case "image":
+      return (
+        <li className="ledger-row ledger-row--image">
+          <LedgerMeta sequence={sequence} label="Image" />
+          <div className="ledger-content">
+            <div className="entry-title">
+              <span className="image-symbol" aria-hidden="true" />
+              <strong>Generated image</strong>
+              <span>{item.mediaType.replace("image/", "").toUpperCase()} · {fileSize(item.bytes)}</span>
+            </div>
+            <p className="entry-path" title={item.path}>{item.path}</p>
+          </div>
         </li>
       );
     case "action":

@@ -28,7 +28,7 @@ export function createDemoApi(): DesktopApi {
     sequence += 1;
     emit({
       type: "session_event",
-      interfaceVersion: 1,
+      interfaceVersion: 2,
       sessionId: "demo-session",
       runId: "demo-run",
       sequence,
@@ -41,21 +41,29 @@ export function createDemoApi(): DesktopApi {
 
   const bootstrap = async (): Promise<BootstrapState> => ({
     appVersion: "0.1.1",
-    coreInterfaceVersion: 1,
+    coreInterfaceVersion: 2,
     demo: true,
     connection: { openAIConfigured: true, baseURL: "https://api.openai.com/v1", tavilyConfigured: true },
   });
 
   const demoStatus = (): FroeSessionStatus => ({
-    interfaceVersion: 1,
+    interfaceVersion: 2,
     sessionId: "demo-session",
     workspace: "/Users/xfq/git/froe",
     additionalDirectories: ["/Users/xfq/git/shared"],
     config: {
       provider: "openai",
       autoUpdate: true,
-      model: "gpt-5.6-terra",
+      model: "gpt-6-astra",
       reasoning: "medium",
+      imageGeneration: {
+        enabled: true,
+        model: "gpt-image-2",
+        size: "auto",
+        quality: "auto",
+        background: "auto",
+        outputFormat: "png",
+      },
       compactThresholdTokens: 200_000,
       maxTurns: 40,
       logging: "metadata",
@@ -67,6 +75,7 @@ export function createDemoApi(): DesktopApi {
         commandTimeoutMs: 120_000,
       },
       commandEnv: [],
+      extraInstructions: [],
       mcpServers: { docs: { url: "https://example.com/mcp" } },
     },
     recordPath: "/Users/xfq/.local/state/froe/runs/demo.jsonl",
@@ -161,7 +170,7 @@ export function createDemoApi(): DesktopApi {
       return { status, historySummary, restoredItems: [] };
     },
     run: async (_request: RunRequest) => {
-      emitRun({ type: "run_started", workspace: status?.workspace ?? "/demo", model: status?.config.model ?? "gpt-5.6-terra" });
+      emitRun({ type: "run_started", workspace: status?.workspace ?? "/demo", model: status?.config.model ?? "gpt-6-astra" });
       emitRun({ type: "model_text", text: "I’ll inspect the requested scope first." });
       return finishDemo("completed", "The synthetic demo Run completed without changing files.");
     },

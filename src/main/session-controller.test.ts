@@ -1,4 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
+import { FROE_CORE_INTERFACE_VERSION } from "@xfq/froe/core";
 import type {
   FroeApprovalPrompt,
   FroeRunRequest,
@@ -18,15 +19,23 @@ const completed: RunOutcome = {
 };
 
 const baseStatus: FroeSessionStatus = {
-  interfaceVersion: 1,
+  interfaceVersion: FROE_CORE_INTERFACE_VERSION,
   sessionId: "session",
   workspace: "/workspace",
   additionalDirectories: [],
   config: {
     provider: "openai",
     autoUpdate: true,
-    model: "gpt-5.6-terra",
+    model: "gpt-6-astra",
     reasoning: "medium",
+    imageGeneration: {
+      enabled: true,
+      model: "gpt-image-2",
+      size: "auto",
+      quality: "auto",
+      background: "auto",
+      outputFormat: "png",
+    },
     compactThresholdTokens: 200_000,
     maxTurns: 40,
     logging: "metadata",
@@ -38,6 +47,7 @@ const baseStatus: FroeSessionStatus = {
       commandTimeoutMs: 120_000,
     },
     commandEnv: [],
+    extraInstructions: [],
     mcpServers: {},
   },
   activeMcpServers: [],
@@ -84,7 +94,7 @@ function capturingFactory(session: FroeSession): { factory: FroeSessionFactory; 
 describe("presentSessionEvent", () => {
   test("summarizes action arguments without crossing the raw patch body", () => {
     const envelope: FroeSessionEvent = {
-      interfaceVersion: 1,
+      interfaceVersion: FROE_CORE_INTERFACE_VERSION,
       sessionId: "session",
       runId: "run",
       sequence: 3,
@@ -109,7 +119,7 @@ describe("presentSessionEvent", () => {
 
   test("redacts credential-shaped text from approval reasons", () => {
     const envelope: FroeSessionEvent = {
-      interfaceVersion: 1,
+      interfaceVersion: FROE_CORE_INTERFACE_VERSION,
       sessionId: "session",
       runId: "run",
       sequence: 4,
@@ -126,6 +136,31 @@ describe("presentSessionEvent", () => {
 
     expect(JSON.stringify(presentSessionEvent(envelope))).not.toContain("sk-1234567890");
     expect(JSON.stringify(presentSessionEvent(envelope))).toContain("api_key=<redacted>");
+  });
+
+  test("presents generated images with path, media type, and size", () => {
+    const envelope: FroeSessionEvent = {
+      interfaceVersion: FROE_CORE_INTERFACE_VERSION,
+      sessionId: "session",
+      runId: "run",
+      sequence: 5,
+      event: {
+        type: "image_generated",
+        path: "/workspace/generated-images/cover.png",
+        mediaType: "image/png",
+        bytes: 48_120,
+      },
+    };
+
+    expect(presentSessionEvent(envelope)).toMatchObject({
+      type: "session_event",
+      event: {
+        type: "image_generated",
+        path: "/workspace/generated-images/cover.png",
+        mediaType: "image/png",
+        bytes: 48_120,
+      },
+    });
   });
 });
 

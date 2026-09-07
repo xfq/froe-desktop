@@ -32,7 +32,7 @@ export function App(): React.JSX.Element {
   const [approval, setApproval] = useState<Extract<DesktopEvent, { type: "approval_prompt" }>["prompt"]>();
   const [deciding, setDeciding] = useState(false);
   const [images, setImages] = useState<ImageGrant[]>([]);
-  const [model, setModel] = useState("gpt-5.6-terra");
+  const [model, setModel] = useState("gpt-6-astra");
   const [verbose, setVerbose] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [politeMessage, setPoliteMessage] = useState("");
@@ -78,7 +78,7 @@ export function App(): React.JSX.Element {
       const result = await api.openSession({
         workspaceGrantId: workspace.id,
         additionalDirectoryGrantIds: [],
-        model: "gpt-5.6-terra",
+        model: "gpt-6-astra",
         reasoning: "medium",
         maxTurns: 40,
         noLog: false,

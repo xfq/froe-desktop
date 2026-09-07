@@ -4,7 +4,7 @@ import { initialLedgerState, ledgerReducer } from "./ledger";
 
 const event = (sequence: number, value: PresentedSessionEvent["event"]): PresentedSessionEvent => ({
   type: "session_event",
-  interfaceVersion: 1,
+  interfaceVersion: 2,
   sessionId: "session",
   runId: "run",
   sequence,
@@ -35,6 +35,30 @@ describe("ledgerReducer", () => {
     expect(state.items).toEqual([]);
     expect(state.inputTokens).toBe(120);
     expect(state.outputTokens).toBe(30);
+  });
+
+  test("adds generated images as ledger rows", () => {
+    const state = ledgerReducer(initialLedgerState, {
+      type: "session_event",
+      event: event(1, {
+        type: "image_generated",
+        path: "/workspace/generated-images/cover.png",
+        mediaType: "image/png",
+        bytes: 48_120,
+      }),
+    });
+
+    expect(state.items).toEqual([
+      {
+        id: "run:1",
+        runId: "run",
+        sequence: 1,
+        type: "image",
+        path: "/workspace/generated-images/cover.png",
+        mediaType: "image/png",
+        bytes: 48_120,
+      },
+    ]);
   });
 
   test("initializes with restored history items on reset", () => {

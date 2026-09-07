@@ -2,6 +2,7 @@ import type {
   ApprovalDecision,
   ApprovalScope,
   FroeSessionStatus,
+  GeneratedImageMediaType,
   JsonPrimitive,
   JsonValue,
   McpServerConfig,
@@ -61,6 +62,7 @@ export type LedgerItem =
   | (LedgerBase & { type: "user"; task: string; images: ImageGrant[] })
   | (LedgerBase & { type: "run_started"; workspace: string; model: string })
   | (LedgerBase & { type: "model"; text: string })
+  | (LedgerBase & { type: "image"; path: string; mediaType: GeneratedImageMediaType; bytes: number })
   | (LedgerBase & { type: "action"; callId: string; name: string; details: string[] })
   | (LedgerBase & { type: "result"; callId: string; name: string; ok: boolean; output: JsonValue })
   | (LedgerBase & { type: "approval"; approvalId: string; actionName: string; reason: string; details: string[]; destructive: boolean })
@@ -98,6 +100,7 @@ export interface PresentedApprovalPrompt {
 export type PresentedRunEvent =
   | { type: "run_started"; workspace: string; model: string }
   | { type: "model_text"; text: string }
+  | { type: "image_generated"; path: string; mediaType: GeneratedImageMediaType; bytes: number }
   | { type: "action_requested"; callId: string; name: string; details: string[] }
   | { type: "action_result"; callId: string; name: string; ok: boolean; output: JsonValue }
   | {

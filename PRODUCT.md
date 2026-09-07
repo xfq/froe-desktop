@@ -15,7 +15,7 @@ Froe serves engineers who want to delegate a bounded coding task while continuou
 - Run sequential tasks through one in-memory Froe Session.
 - Attach PNG, JPEG, WEBP, or GIF images to a Run.
 - Change the model between Runs without discarding continuation.
-- Display ordered model, Action, approval, usage, compaction, verification, and outcome evidence.
+- Display ordered model, Action, approval, generated-image, usage, compaction, verification, and outcome evidence.
 - Approve only choices permitted by core, cancel active Runs, and close Sessions safely.
 - Show active and failed MCP servers and add local or remote MCP definitions for the next Session.
 

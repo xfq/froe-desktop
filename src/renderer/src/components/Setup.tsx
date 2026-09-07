@@ -101,7 +101,7 @@ export function WorkspaceSetup({ selectWorkspace, selectAdditionalDirectories, o
   const maxTurnsId = useId();
   const [workspace, setWorkspace] = useState<PathGrant>();
   const [additional, setAdditional] = useState<PathGrant[]>([]);
-  const [model, setModel] = useState("gpt-5.6-terra");
+  const [model, setModel] = useState("gpt-6-astra");
   const [reasoning, setReasoning] = useState<ReasoningEffort>("medium");
   const [maxTurns, setMaxTurns] = useState(40);
   const [noLog, setNoLog] = useState(false);

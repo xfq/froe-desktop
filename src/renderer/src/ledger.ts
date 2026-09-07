@@ -76,6 +76,8 @@ function ledgerItem(envelope: PresentedSessionEvent): LedgerItem | undefined {
       return { ...base, type: "run_started", workspace: event.workspace, model: event.model };
     case "model_text":
       return { ...base, type: "model", text: event.text };
+    case "image_generated":
+      return { ...base, type: "image", path: event.path, mediaType: event.mediaType, bytes: event.bytes };
     case "action_requested":
       return { ...base, type: "action", callId: event.callId, name: event.name, details: event.details };
     case "action_result":

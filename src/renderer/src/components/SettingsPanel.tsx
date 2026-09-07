@@ -56,6 +56,8 @@ export function SettingsPanel({ bootstrap, status, onClose, saveOpenAI, saveTavi
             <div><dt>Model</dt><dd>{status.config.model}</dd></div>
             <div><dt>Reasoning</dt><dd>{status.config.reasoning}</dd></div>
             <div><dt>Maximum turns</dt><dd>{status.config.maxTurns}</dd></div>
+            <div><dt>Image generation</dt><dd>{status.config.imageGeneration.enabled ? status.config.imageGeneration.model : "disabled"}</dd></div>
+            <div><dt>Standing instructions</dt><dd>{status.config.extraInstructions.length === 0 ? "none" : `${status.config.extraInstructions.length} instruction${status.config.extraInstructions.length === 1 ? "" : "s"}`}</dd></div>
             <div><dt>Logging</dt><dd>{status.recordPath === undefined ? "disabled" : status.config.logging}</dd></div>
             <div><dt>Context compaction</dt><dd>{status.config.compactThresholdTokens === null ? "disabled" : `${status.config.compactThresholdTokens.toLocaleString()} tokens`}</dd></div>
           </dl>

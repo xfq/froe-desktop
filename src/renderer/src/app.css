@@ -608,7 +608,8 @@ input[type="checkbox"] {
 }
 
 .ledger-row--action,
-.ledger-row--result {
+.ledger-row--result,
+.ledger-row--image {
   background: #15130f;
 }
 
@@ -620,7 +621,8 @@ input[type="checkbox"] {
 
 .entry-marker,
 .result-symbol,
-.boundary-symbol {
+.boundary-symbol,
+.image-symbol {
   position: relative;
   display: inline-block;
   width: 0.9rem;
@@ -685,6 +687,25 @@ input[type="checkbox"] {
 .boundary-symbol {
   border: 2px solid currentColor;
   transform: rotate(45deg) scale(0.68);
+}
+
+.image-symbol {
+  border: 2px solid currentColor;
+}
+
+.image-symbol::after {
+  position: absolute;
+  inset: 0.18rem;
+  background: currentColor;
+  content: "";
+}
+
+.entry-path {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.72rem;
+  line-height: 1.55;
 }
 
 .detail-list,

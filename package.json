@@ -21,7 +21,7 @@
     "package:mac:dir": "pnpm build && electron-builder --mac dir"
   },
   "dependencies": {
-    "@xfq/froe": "0.3.0",
+    "@xfq/froe": "0.5.0",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

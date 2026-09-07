@@ -245,5 +245,12 @@ function presentRunEvent(envelope: FroeSessionEvent): PresentedRunEvent {
     case "usage":
     case "run_finished":
       return structuredClone(event);
+    case "image_generated":
+      return {
+        type: event.type,
+        path: event.path,
+        mediaType: event.mediaType,
+        bytes: event.bytes,
+      };
   }
 }
