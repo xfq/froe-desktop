@@ -8,6 +8,8 @@ The Electron main process owns native dialogs, path grants, Froe configuration o
 
 The renderer has no Node integration and receives no generic IPC primitive. Navigation and popup creation are denied. IPC requests are accepted only from the application's own renderer URL.
 
+Command risk classification and patch semantics belong to core.
+
 ## Session lifecycle and persistence
 
 A Session is opened with user-selected options including model overrides, limits, approval mode, and `resumeHistory`. Opening a Workspace defaults to a fresh conversation with an empty Evidence Ledger while detecting any previous persisted conversation for that Workspace. The left workspace rail allows switching between starting a new conversation and resuming the previous conversation; when resuming, previously recorded conversation events are formatted into Ledger items to populate the Evidence Ledger and the core continuation state is restored.

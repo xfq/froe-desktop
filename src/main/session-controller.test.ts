@@ -92,6 +92,53 @@ function capturingFactory(session: FroeSession): { factory: FroeSessionFactory; 
 }
 
 describe("presentSessionEvent", () => {
+  test("presents repeated and empty-text patch changes without exposing their contents", () => {
+    const presented = presentSessionEvent({
+      interfaceVersion: FROE_CORE_INTERFACE_VERSION,
+      sessionId: "session",
+      runId: "run",
+      sequence: 1,
+      event: {
+        type: "action_requested",
+        action: {
+          callId: "patch",
+          name: "apply_patch",
+          arguments: {
+            changes: [
+              { path: "empty.txt", oldText: null, newText: "" },
+              { path: "empty.txt", oldText: "", newText: "private replacement" },
+              { path: "empty.txt", oldText: "private replacement", newText: "" },
+            ],
+          },
+        },
+      },
+    });
+
+    expect(JSON.stringify(presented)).toContain("empty.txt");
+    expect(JSON.stringify(presented)).not.toContain("private replacement");
+  });
+
+  test("preserves net per-file patch results, including unchanged files", () => {
+    const output = {
+      changed: [
+        { path: "empty.txt", operation: "created" },
+        { path: "edited.txt", operation: "replaced" },
+        { path: "untouched.txt", operation: "unchanged" },
+        { path: "removed.txt", operation: "deleted" },
+      ],
+    };
+    expect(presentSessionEvent({
+      interfaceVersion: FROE_CORE_INTERFACE_VERSION,
+      sessionId: "session",
+      runId: "run",
+      sequence: 2,
+      event: {
+        type: "action_result",
+        result: { callId: "patch", name: "apply_patch", ok: true, output },
+      },
+    })).toMatchObject({ event: { type: "action_result", output } });
+  });
+
   test("summarizes action arguments without crossing the raw patch body", () => {
     const envelope: FroeSessionEvent = {
       interfaceVersion: FROE_CORE_INTERFACE_VERSION,
@@ -165,6 +212,35 @@ describe("presentSessionEvent", () => {
 });
 
 describe("DesktopSessionController", () => {
+  test.each([
+    { executable: "bash", args: ["-c", "echo hello"] },
+    { executable: "git", args: ["-C", "/workspace", "reset", "--hard"] },
+    { executable: "env", args: ["busybox", "rm", "file.txt"] },
+  ])("forwards core policy approvals in auto mode for $executable", async (command) => {
+    const events: unknown[] = [];
+    const { factory, options } = capturingFactory(fakeSession());
+    const controller = new DesktopSessionController((event) => events.push(event), factory);
+    await controller.open({ ...desktopOpenOptions, autoApproveNonDestructive: true });
+    expect(options().approvalMode).toBe("auto_non_destructive");
+    const prompt: FroeApprovalPrompt = {
+      ...approvalPrompt,
+      action: { callId: "call", name: "run_command", arguments: command },
+      reason: "Core requires review of this command.",
+      destructive: true,
+      scope: "policy",
+      choices: ["approve_once", "deny"],
+    };
+    const approval = options().adapter?.requestApproval?.(prompt);
+    expect(events).toContainEqual({
+      type: "approval_prompt",
+      prompt: expect.objectContaining({ destructive: true, scope: "policy", choices: prompt.choices }),
+    });
+    expect(() => controller.respondToApproval(prompt.id, "approve_for_run")).toThrow("did not offer");
+    controller.respondToApproval(prompt.id, "deny");
+    await expect(approval).resolves.toBe("deny");
+    await controller.close();
+  });
+
   test("cancels an active Run through its AbortSignal", async () => {
     let runSignal: AbortSignal | undefined;
     const session = fakeSession({
